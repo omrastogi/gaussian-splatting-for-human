@@ -24,7 +24,7 @@ from gaussian_renderer import GaussianModel
 def render_set(model_path, name, iteration, views, gaussians, pipeline, background):
     render_path = os.path.join(model_path, name, "ours_{}".format(iteration), "renders")
     gts_path = os.path.join(model_path, name, "ours_{}".format(iteration), "gt")
-
+    print(render_path)
     makedirs(render_path, exist_ok=True)
     makedirs(gts_path, exist_ok=True)
 

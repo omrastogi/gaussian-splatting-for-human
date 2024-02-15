@@ -93,9 +93,11 @@ def readColmapCameras(cam_extrinsics, cam_intrinsics, images_folder):
             FovX = focal2fov(focal_length_x, width)
         else:
             assert False, "Colmap camera model not handled: only undistorted datasets (PINHOLE or SIMPLE_PINHOLE cameras) supported!"
-
-        image_path = os.path.join(images_folder, os.path.basename(extr.name))
-        image_name = os.path.basename(image_path).split(".")[0]
+        # image_path = os.path.join(images_folder, os.path.basename(extr.name))
+        # image_name = os.path.basename(image_path).split(".")[0]
+        # Can't have the basename
+        image_path = os.path.join(images_folder, extr.name)
+        image_name = extr.name.split(".")[0]
         image = Image.open(image_path)
 
         cam_info = CameraInfo(uid=uid, R=R, T=T, FovY=FovY, FovX=FovX, image=image,
@@ -135,6 +137,7 @@ def readColmapSceneInfo(path, images, eval, llffhold=8):
         cameras_intrinsic_file = os.path.join(path, "sparse/0", "cameras.bin")
         cam_extrinsics = read_extrinsics_binary(cameras_extrinsic_file)
         cam_intrinsics = read_intrinsics_binary(cameras_intrinsic_file)
+        
     except:
         cameras_extrinsic_file = os.path.join(path, "sparse/0", "images.txt")
         cameras_intrinsic_file = os.path.join(path, "sparse/0", "cameras.txt")
